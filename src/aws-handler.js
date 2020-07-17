@@ -2,6 +2,11 @@ const AWS = require("aws-sdk");
 const fs = require("fs");
 const mime = require("mime");
 
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
 class UploadParam {
   constructor({ Bucket, Key, Body, ContentType }) {
     this.Bucket = Bucket;
