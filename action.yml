@@ -13,7 +13,7 @@ inputs:
     description: "Name of S3 Bucket"
     required: true
   distribution-id:
-    description: "Invalidtion Id for Cloudfront. It will not invoked if not exist"
+    description: "AWS Cloudfront Distribution Id to Invalidation. It will not invoked if not exist"
     required: false
 runs:
   using: "node12"
