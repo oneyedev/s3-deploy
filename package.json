@@ -1,0 +1,21 @@
+{
+  "name": "s3-deploy",
+  "version": "0.1.0",
+  "description": "S3 Deploy for Github workflow",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oneyedev/s3-deploy.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "main": "index.js",
+  "scripts": {},
+  "author": "oneyedev",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^4.0.0",
+    "aws-sdk": "^2.714.2"
+  }
+}

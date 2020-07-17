@@ -1,0 +1,16 @@
+name: 'S3 Deploy'
+description: 'S3 Deploy for github workflow'
+inputs:
+  region:
+    description: 'AWS Region of S3 Bucket'
+    required: true
+    default: 'us-east-1'
+  bucket:
+    description: 'Name of S3 Bucket'
+    required: true
+  distribution-id:
+    description: 'Invalidtion Id for Cloudfront. It will not invoked if not exist'
+    required: false
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
