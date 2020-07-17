@@ -90,7 +90,8 @@ module.exports.S3Handler = class {
   invalidateCloudfront({ distributionId }) {
     return new Promise((resolve, reject) => {
       if (!distributionId) resolve(null);
-      var params = {
+      const cloudfront = new AWS.CloudFront();
+      const params = {
         DistributionId: distributionId,
         InvalidationBatch: {
           CallerReference: Math.floor(Date.now() / 10000).toString(),
@@ -100,7 +101,7 @@ module.exports.S3Handler = class {
           },
         },
       };
-      CloudFront.createInvalidation(params, function (err, data) {
+      cloudfront.createInvalidation(params, function (err, data) {
         if (err) {
           reject(err);
         } else {
@@ -110,32 +111,3 @@ module.exports.S3Handler = class {
     });
   }
 };
-
-// module.exports.uploadFiles = ({ root = "", fileNames, bucket }) => {
-//   return new Promise((resolve, reject) => {
-//     if (!fileNames || !fileNames.length > 0) {
-//       reject("No matched files");
-//     }
-//     const lastIndex = fileNames.length - 1;
-//     fileNames.forEach((fileName, index) => {
-//       convertToUploadParam({
-//         root,
-//         fileName,
-//         bucket,
-//       }).then((uploadParam) => {
-//         console.log(uploadParam);
-//       });
-//       //   s3.upload(option, (err, data) => {
-//       //     if (err) reject(err);
-//       //     else {
-//       //       console.log("Upload complete " + data.Location);
-//       //       if (index === lastIndex) {
-//       //         resolve();
-//       //       }
-//       //     }
-//       //   });
-//     });
-//   });
-// };
-
-// module.exports.deleteAllObjects = deleteAllObjects;
