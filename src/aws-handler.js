@@ -31,20 +31,24 @@ module.exports.S3Handler = class {
 
   deleteAllObjects() {
     return new Promise((resolve, reject) => {
-      this.listAllObjects().then((objects) => {
-        if (objects.length === 0) {
-          resolve();
-        } else {
-          const deleteParams = {
-            Bucket: this.bucket,
-            Delete: { Objects: objects.map((e) => ({ Key: e.Key })) },
-          };
-          this.s3.deleteObjects(deleteParams, function (err, data) {
-            if (err) reject(err);
-            else resolve(data);
-          });
-        }
-      });
+      this.listAllObjects()
+        .then((objects) => {
+          if (objects.length === 0) {
+            resolve();
+          } else {
+            const deleteParams = {
+              Bucket: this.bucket,
+              Delete: { Objects: objects.map((e) => ({ Key: e.Key })) },
+            };
+            this.s3.deleteObjects(deleteParams, function (err, data) {
+              if (err) reject(err);
+              else resolve(data);
+            });
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 
