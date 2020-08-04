@@ -17,10 +17,10 @@ class UploadParam {
 }
 
 class LambdaParam {
-  constructor({ s3FileKey, functionName, handler }) {
+  constructor({ s3FileKey, functionName, functionHandler }) {
     this.s3FileKey = s3FileKey;
     this.functionName = functionName;
-    this.handler = handler;
+    this.functionHandler = functionHandler;
   }
 }
 
@@ -135,7 +135,7 @@ module.exports.S3Handler = class {
             this.lambda.updateFunctionConfiguration(
               {
                 FunctionName: option.functionName,
-                Handler: option.handler,
+                Handler: option.functionHandler,
               },
               (err, data) => {
                 if (err) reject(err);

@@ -60,9 +60,8 @@ module.exports = async (option = DeployOption.prototype) => {
     functionHandler: option.lambdaFunctionHandler,
   });
   if (lambda) {
-    console.log(
-      `Request Lambda Deployment successfuly at ${lambda.FunctionName}`
-    );
+    console.log(`Request Lambda Deployment successfuly`);
+    console.log(lambda);
   } else {
     console.log("Skip a Lambda Deployment");
   }
