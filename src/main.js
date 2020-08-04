@@ -27,7 +27,7 @@ module.exports = async (option = DeployOption.prototype) => {
     await s3Handler.deleteAllObjects();
   }
   const results = await Promise.all(
-    fileNames.map(async (fileName) => {
+    [...fileNames].map(async (fileName) => {
       const uploadParam = await s3Handler.readFileToUpload({
         folder: fileResolver.getPathFolder(),
         fileName: fileName,
