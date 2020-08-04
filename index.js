@@ -7,7 +7,7 @@ const inputs = {
   target: core.getInput("target"),
   distibutionId: core.getInput("distribution-id"),
   lambdaFunctionName: core.getInput("lambda-function-name"),
-  lambdaFunctionHandler: core.getInput("lambda-function-name"),
+  lambdaFunctionHandler: core.getInput("lambda-function-handler"),
 };
 (async () => {
   try {
