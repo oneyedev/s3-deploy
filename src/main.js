@@ -19,6 +19,7 @@ module.exports = async (option = DeployOption.prototype) => {
     console.info("No file matched");
     return;
   }
+  console.log(`Try deploy with ${fileNames.length} files`);
   const s3Handler = new S3Handler({
     region: option.region,
     bucket: option.bucket,
