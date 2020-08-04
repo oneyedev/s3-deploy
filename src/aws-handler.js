@@ -27,6 +27,8 @@ class LambdaParam {
 module.exports.S3Handler = class {
   constructor({ region, bucket }) {
     this.s3 = new AWS.S3({ region });
+    this.lambda = new AWS.Lambda({ apiVersion: "2015-03-31", region });
+    this.cloudfront = new AWS.CloudFront({ region });
     this.bucket = bucket;
   }
 
@@ -98,7 +100,6 @@ module.exports.S3Handler = class {
   invalidateCloudfront({ distributionId }) {
     return new Promise((resolve, reject) => {
       if (!distributionId) resolve(null);
-      const cloudfront = new AWS.CloudFront();
       const params = {
         DistributionId: distributionId,
         InvalidationBatch: {
@@ -109,7 +110,7 @@ module.exports.S3Handler = class {
           },
         },
       };
-      cloudfront.createInvalidation(params, function (err, data) {
+      this.cloudfront.createInvalidation(params, function (err, data) {
         if (err) {
           reject(err);
         } else {
@@ -121,24 +122,23 @@ module.exports.S3Handler = class {
 
   updateLambdaFunction(option = LambdaParam.prototype) {
     return new Promise((resolve, reject) => {
-      const Lambda = new AWS.Lambda({ apiVersion: "2015-03-31" });
       if (!option.functionName) resolve(null);
-      Lambda.updateFunctionCode(
+      this.lambda.updateFunctionCode(
         {
           FunctionName: option.functionName,
           S3Bucket: this.bucket,
           S3Key: option.s3FileKey,
         },
-        function (err, data) {
-          if (err) reject(error);
+        (err, data) => {
+          if (err) reject(err);
           else if (option.handler) {
-            Lambda.updateFunctionConfiguration(
+            this.lambda.updateFunctionConfiguration(
               {
                 FunctionName: option.functionName,
                 Handler: option.handler,
               },
-              function (err, data) {
-                if (err) reject(error);
+              (err, data) => {
+                if (err) reject(err);
                 else resolve(data);
               }
             );
