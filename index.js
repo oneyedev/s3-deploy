@@ -21,7 +21,9 @@ const inputs = {
       region: inputs.region,
       bucket: inputs.bucket,
     });
-    await s3Handler.deleteAllObjects();
+    if (this.fieResolver.isDirectory) {
+      await s3Handler.deleteAllObjects();
+    }
     const results = await Promise.all(
       fileNames.map(async (fileName) => {
         const uploadParam = await s3Handler.readFileToUpload({
