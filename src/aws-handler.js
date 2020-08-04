@@ -16,6 +16,14 @@ class UploadParam {
   }
 }
 
+class LambdaParam {
+  constructor({ s3FileKey, functionName, handler }) {
+    this.s3FileKey = s3FileKey;
+    this.functionName = functionName;
+    this.handler = handler;
+  }
+}
+
 module.exports.S3Handler = class {
   constructor({ region, bucket }) {
     this.s3 = new AWS.S3({ region });
@@ -108,6 +116,37 @@ module.exports.S3Handler = class {
           resolve(data);
         }
       });
+    });
+  }
+
+  updateLambdaFunction(option = LambdaParam.prototype) {
+    return new Promise((resolve, reject) => {
+      const Lambda = new AWS.Lambda({ apiVersion: "2015-03-31" });
+      if (!option.functionName) resolve(null);
+      Lambda.updateFunctionCode(
+        {
+          FunctionName: option.functionName,
+          S3Bucket: this.bucket,
+          S3Key: option.s3FileKey,
+        },
+        function (err, data) {
+          if (err) reject(error);
+          else if (option.handler) {
+            Lambda.updateFunctionConfiguration(
+              {
+                FunctionName: option.functionName,
+                Handler: option.handler,
+              },
+              function (err, data) {
+                if (err) reject(error);
+                else resolve(data);
+              }
+            );
+          } else {
+            resolve(data);
+          }
+        }
+      );
     });
   }
 };

@@ -1,10 +1,6 @@
 name: "S3 Deploy"
 description: "S3 Deploy for github workflow"
 inputs:
-  public-root:
-    description: "Public Root Directory to Deploy"
-    required: true
-    default: "./dist"
   region:
     description: "AWS Region of S3 Bucket"
     required: true
@@ -12,8 +8,18 @@ inputs:
   bucket:
     description: "Name of S3 Bucket"
     required: true
+  target:
+    description: "A Public Root Directory or File to Upload"
+    required: true
+    default: "./dist"
   distribution-id:
     description: "AWS Cloudfront Distribution Id to Invalidation. It will not invoked if not exist"
+    required: false
+  lambda-function-name:
+    description: "AWS Lambda Function Name to Update. It will not invoked if not exist"
+    required: false
+  lambda-function-handler:
+    description: "AWS Lambda Function Handler to Update. It will not invoked if not exist"
     required: false
 runs:
   using: "node12"
