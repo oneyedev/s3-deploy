@@ -1,5 +1,5 @@
 {
-  "name": "s3-deploy",
+  "name": "@oneyedev/s3-deploy",
   "version": "1.0.0",
   "description": "S3 Deploy for Github workflow",
   "repository": {
