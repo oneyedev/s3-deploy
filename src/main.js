@@ -13,13 +13,15 @@ class DeployOption {
 }
 
 module.exports = async (option = DeployOption.prototype) => {
+  console.log("Try deploy with below option");
+  console.log(option);
   const fileResolver = new FileResolver(option.target);
   const fileNames = (await fileResolver.getFileNames()) || [];
   if (fileNames.length === 0) {
     console.info("No file matched");
     return;
   }
-  console.log(`Try deploy with ${fileNames.length} files`);
+  console.log(`Try upload to s3 with ${fileNames.length} files`);
   const s3Handler = new S3Handler({
     region: option.region,
     bucket: option.bucket,

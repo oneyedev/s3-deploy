@@ -131,7 +131,7 @@ module.exports.S3Handler = class {
         },
         (err, data) => {
           if (err) reject(err);
-          else if (option.handler) {
+          else if (option.functionHandler) {
             this.lambda.updateFunctionConfiguration(
               {
                 FunctionName: option.functionName,
