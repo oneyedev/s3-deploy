@@ -50,7 +50,7 @@ const inputs = {
       console.log("Skip a invalidation");
     }
     const lambda = await s3Handler.updateLambdaFunction({
-      s3FileKey: fileResolver.isDirectory ? "" : this.fileNames[0],
+      s3FileKey: fileResolver.isDirectory ? "" : fileNames[0],
       functionName: inputs.lambdaFunctionName,
       functionHandler: inputs.lambdaFunctionHandler,
     });
